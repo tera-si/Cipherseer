@@ -112,7 +112,7 @@ def main():
     for host in hosts.hosts:
         print(f"Report for: {host.hostname}")
         host.pretty_report()
-        print("Weak ciphers for easy copying:")
+        print("Weak ciphers used by this host (for easy copying):")
         host.plain_report_weak()
 
 

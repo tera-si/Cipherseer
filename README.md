@@ -20,6 +20,8 @@ $ python3 main.py example.json
 
 # Quirks
 
-- The script expects the testssl.sh scan to be performed with default checks, ordering, and formatting. So if change any of these, e.g. using `--mapping`, then the script will not work correctly.
+- The script expects the testssl.sh scan to be performed with default checks,
+  ordering, and formatting. So if you changed any of these, e.g. using `--mapping`,
+  then the script will not work correctly.
 - The ciphersuite.info does not include explanations on why a cipher might be
   weak. For that you'll have to visit the ciphersuite.info website yourself.

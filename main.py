@@ -34,7 +34,7 @@ class Host:
         for protocol, ciphers in self.ciphers.items():
             print(f"{protocol} (server order):")
             print(tabulate.tabulate(ciphers, headers=self.table_headers, tablefmt="psql") , end="\n\n\n")
-    
+
     def plain_report_weak(self) -> None:
         """Prints all the weak ciphers in unformatted text for easy copying"""
         for cipher in self.weaks:
@@ -45,7 +45,7 @@ class Host:
 class Hosts:
     def __init__(self) -> None:
         self.hosts: list[Host] = []
-    
+
     def retrieve_host(self, hostname: str) -> Host:
         """Searches through the hosts array and returns the host object that
         matches the provided hostname. If none found, creates a new host object
@@ -53,7 +53,7 @@ class Hosts:
         for host in self.hosts:
             if host.hostname == hostname:
                 return host
-        
+
         host = Host(hostname)
         self.hosts.append(host)
         return host
@@ -84,13 +84,16 @@ def main():
 
                 # Make API request and grep relevant fields
                 url = url_base + cipher
-                try:
-                    rsp = requests.get(url).json()
-                    rsp_rating: str = rsp[cipher]["security"].strip()
-                except:
+                rsp = requests.get(url)
+
+                if rsp.status_code == 404:
                     print(f"{cipher} not found in CipherSuite's API", file=sys.stderr)
                     host.ciphers[protocol].append([cipher, "Unknown"])
                     continue
+
+                rsp = rsp.json()
+                rsp_rating: str = rsp[cipher]["security"].strip()
+
 
                 # Colour encode API response
                 if rsp_rating == "insecure":
@@ -107,7 +110,7 @@ def main():
                     coloured_rating = rsp_rating
                 # Write result to host object
                 host.ciphers[protocol].append([cipher, coloured_rating])
-    
+
     # Display results
     for host in hosts.hosts:
         print(f"Report for: {host.hostname}")

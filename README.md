@@ -23,5 +23,6 @@ $ python3 main.py example.json
 - The script expects the testssl.sh scan to be performed with default checks,
   ordering, and formatting. So if you changed any of these, e.g. using `--mapping`,
   then the script will not work correctly.
-- The ciphersuite.info does not include explanations on why a cipher might be
+- The ciphersuite.info API does not include explanations on why a cipher might be
   weak. For that you'll have to visit the ciphersuite.info website yourself.
+
